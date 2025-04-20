@@ -1,23 +1,23 @@
 version: '3.8'
 services:
   web:
-  build: ./app
-  ports:
-    - "5000:5000"
-  volumes:
-    - ./app:/app
-  networks:
-    - flask-net
-  nginx:
-    image: nginx:alpine
+    build: ./app
     ports:
-      - "80:80"
+      - "5000:5000"
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - web
+      - ./app:/app
     networks:
       - flask-net
+    nginx:
+      image: nginx:alpine
+      ports:
+        - "80:80"
+      volumes:
+        - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      depends_on:
+        - web
+      networks:
+        - flask-net
 
 networks:
   flask-net:
